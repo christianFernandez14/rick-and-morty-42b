@@ -1,0 +1,11 @@
+.layout__cards {
+  flex-basis: 70%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  border: 1px solid;
+}
