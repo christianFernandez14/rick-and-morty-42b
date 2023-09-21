@@ -1,5 +1,5 @@
 import styleCards from './Cards.module.css'
-import Card from '../Card/Card'
+import Card from '../card/Card'
 
 export default function Cards({ characters, onClose }) {
    // Viendo que estoy recibiendo por propiedades
@@ -7,7 +7,7 @@ export default function Cards({ characters, onClose }) {
    return (
       <div className={styleCards.layout__cards}>
          {
-            characters.map(({ id, name, status, species, gender, origin, image }) => (
+            characters?.map(({ id, name, status, species, gender, origin, image }) => (
                <Card
                   key={id}
                   id={id}
