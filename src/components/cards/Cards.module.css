@@ -1,5 +1,5 @@
 .layout__cards {
-  flex-basis: 70%;
+  height: 70%;
   margin-top: 20px;
   display: flex;
   flex-direction: row;

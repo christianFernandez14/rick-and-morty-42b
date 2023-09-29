@@ -1,18 +1,32 @@
 import styleCards from './Nav.module.css';
 import SearchBar from '../searchBar/SearchBar'
-import { Link } from "react-router-dom";
+import Button from '../button/Button';
 
-const Nav = ({ onSearch }) => {
+const Nav = ({ onSearch, setAccess }) => {
+
+  const handleLogOut = () => {
+    setAccess(false)
+  }
+
   return (
     <nav className={styleCards.layout__nav}>
-   
-        <Link to='/home'><button>Home</button></Link>
 
-        <Link to='/about'><button>About</button></Link>
+      <div className={styleCards.nav__buttons}>
+        <button onClick={handleLogOut}>Logout</button>
+        <Button link='/home' text='Home' />
+        <Button link='/about' text='About' />
+        <Button link='/favorites' text='Favorites' />
 
-      <SearchBar
-        onSearch={onSearch}
-      />
+        {/* 
+
+          <Link to='/home'><button>Home</button></Link>
+
+          <Link to='/about'><button>About</button></Link>
+
+          <Link to='/favorites'><button>favorites</button></Link> */}
+
+      </div>
+      <SearchBar onSearch={onSearch} />
     </nav>
   )
 }

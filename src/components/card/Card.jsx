@@ -1,17 +1,56 @@
 import styleCard from './Card.module.css'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { addFav, removeFav } from '../../redux/actions';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-export default function Card({ id, name, status, species, gender, origin, image, onClose }) {
-   // console.log(props);
+const Card = ({ id, name, species, gender, image, onClose }) => {
+   // Estado local
+   const [isFav, setIsFav] = useState(false)
+
+   // Me genera una funcion para que pueda despachar la accion.
+   const dispatch = useDispatch();
+
+   // Accedo al estod global desde este componente
+   const myFavorites = useSelector((state) => state.myFavorites)
+
+   // Para el condicional del boton en Favorito:
+   const { pathname } = useLocation()
+
+   const handleFavorite = () => {
+      if (isFav) {
+         setIsFav(false)
+         dispatch(removeFav(id))
+      } else {
+         setIsFav(true)
+         dispatch(addFav({ id, name, species, gender, image }))
+      }
+   }
+
+
+   useEffect(() => {
+      // Es bueno preguntar si hay algo en myFavorites, con el optional chaning
+      myFavorites?.forEach((fav) => {
+         if (fav.id === id) {
+            setIsFav(true)
+         }
+      })
+   }, [myFavorites])
+
    return (
       <div >
          <figure className={styleCard.cards__card}>
-            <button
-               className={styleCard.card__button}
-               onClick={() => onClose(id)}
-            >
-               X
+            <button onClick={handleFavorite}>
+               {isFav ? '❤️' : '🤍'}
             </button>
+
+            {
+               // Condiciono el boton de eliminar card, cuando se encuentre en /favorites
+               pathname !== '/favorites'
+               ? <button className={styleCard.card__button} onClick={() => onClose(id)}>X</button>
+               : ''
+            }
+            
             <img
                className={styleCard.card__image}
                src={image}
@@ -24,10 +63,9 @@ export default function Card({ id, name, status, species, gender, origin, image,
                <h3 className={styleCard.card__text}>{species}</h3>
                <h3 className={styleCard.card__text}>{gender}</h3>
             </div>
-            {/* Contenido extra */}
-            {/* <h2>{`Estatus: ${status}`}</h2> */}
-            {/* <h2>{`Origen: ${origin}`}</h2> */}
          </figure>
       </div>
    );
 }
+
+export default Card

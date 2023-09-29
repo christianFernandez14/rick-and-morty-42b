@@ -1,4 +1,5 @@
-   // Importa y crea un estado
+import styleCards from '../nav/Nav.module.css';
+// Importa y crea un estado
 import { useState } from "react";
 
 export default function SearchBar({ onSearch }) {
@@ -11,21 +12,18 @@ export default function SearchBar({ onSearch }) {
 
    }
    return (
-      <div>
+      <div className={styleCards.nav__searchButton}>
          <input
             type="text"
             placeholder="Search by Id..."
             onChange={handleChange}
             value={id}
          />
-         <div className="actions">
-            <button
-               onClick={() => { onSearch(id); setId('') }}
-            >
-               <span className="material-icons">search</span>
-            </button>
-         </div>
-
+         <button
+            onClick={() => { onSearch(id); setId('') }}
+         >
+            Agregar
+         </button>
       </div>
    );
 }
